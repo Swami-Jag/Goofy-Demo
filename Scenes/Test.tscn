@@ -1,3 +1,151 @@
-[gd_scene format=3 uid="uid://sk7g1w7mnjyw"]
+[gd_scene load_steps=11 format=3 uid="uid://sk7g1w7mnjyw"]
 
-[node name="Test" type="Node2D"]
+[ext_resource type="PackedScene" uid="uid://dpcw2t66ybt36" path="res://Scenes/Player.tscn" id="1_ews6x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6v4aq"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_vcy8h"]
+sky_material = SubResource("ProceduralSkyMaterial_6v4aq")
+
+[sub_resource type="Environment" id="Environment_7vlng"]
+background_mode = 2
+sky = SubResource("Sky_vcy8h")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yhowg"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ptvh"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mwnkf"]
+albedo_color = Color(0, 0.320958, 0.202646, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4jg6v"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_12iwa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_02t1i"]
+albedo_color = Color(0, 0.486025, 0.761267, 1)
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310719, 0.0219743, 0.0982679)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 5
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(512, 320)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_7vlng")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, -0.310719, 0.0219743, 0.0982679)
+shadow_enabled = true
+
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_ews6x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310719, 1.76798, 0.0982679)
+
+[node name="Ground" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310719, 0.0219743, 0.0982679)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Ground"]
+shape = SubResource("BoxShape3D_yhowg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Ground"]
+mesh = SubResource("BoxMesh_7ptvh")
+surface_material_override/0 = SubResource("StandardMaterial3D_mwnkf")
+
+[node name="cube" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.310719, 0.48869, -5.28048)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube2" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.66579, 0.48869, -5.28048)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.21786)
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube2/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube3" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.66579, 0.48869, 0.10641)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube3"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube3/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube4" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.66579, 0.48869, 6.9208)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube4"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube4/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube5" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1674, 0.48869, 8.30251)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube5"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube5/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube6" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09523, 0.48869, 8.30251)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube6"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube6/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube7" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09523, 0.48869, 3.10629)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube7"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube7/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
+
+[node name="cube8" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09523, 0.48869, -3.71481)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/cube8"]
+shape = SubResource("BoxShape3D_4jg6v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/cube8/CollisionShape3D2"]
+mesh = SubResource("BoxMesh_12iwa")
+surface_material_override/0 = SubResource("StandardMaterial3D_02t1i")
